@@ -55,13 +55,14 @@ i = 0
 # scans user's input and check if it is accepted by automata
 f = 0
 while n == 'y': 
-    s = input("\nEnter the word : ")
+    s = input("Enter the word : ")
     while f < len(s):
         if (s[f] in alphabets):
             f = f + 1
         else:
             sys.exit('Not Acceptable String!')
     currentState = InitialState[0]
+    del patharray[:]
     patharray.append(currentState)
     for i in range(0, len(s)):
         k = 0
@@ -79,8 +80,8 @@ while n == 'y':
     	print(" -> Q",patharray[d], sep ="", end ="")
 
     if (currentState in TerminalStates):
-        print("\n\tAccepted!")
+        print("\nResult\t       : Accepted!")
     else:
-        print ("\n\tRejected!")
+        print ("\nResult\t       : Rejected!")
         
-    n = input('\n' + 'Do you want to continue?(y/n): ')
+    n = input("\nDo you want to continue?(y/n): ")
