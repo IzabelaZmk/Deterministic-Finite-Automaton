@@ -74,9 +74,9 @@ while n == 'y':
 
     f = 0
     d = 0
-    print("The Path is    :", end =" ")
+    print("The Path is    :", end ="")
     for d in range(len(patharray)): 
-    	print("-> Q",patharray[d], end =" ")
+    	print(" -> Q",patharray[d], sep ="", end ="")
 
     if (currentState in TerminalStates):
         print("\n\tAccepted!")
