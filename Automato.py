@@ -3,6 +3,7 @@
 
 n = 'y'
 import re
+import sys
 InitialState = []
 TerminalStates = []
 currentState = 0
@@ -51,9 +52,14 @@ i = 0
 #------------------------------------
 
 # scans user's input and check if it is accepted by automata
-
-while n != 'n': 
+f = 0
+while n == 'y': 
     s = input("Enter the word : ")
+    while f < len(s):
+        if (s[f] in alphabets):
+            f = f + 1
+        else:
+            sys.exit('Not Acceptable String!')
     currentState = InitialState[0]
     for i in range(0, len(s)):
         k = 0
@@ -62,11 +68,11 @@ while n != 'n':
                 currentState = edges[k][2]
                 k = j
             k = k + 1
-            
+    f = 0         
 
     if (currentState in TerminalStates):
         print("accepted")
     else:
         print ("rejected")
-
+        
     n = input('\n' + 'Do you want to continue?(y/n): ')
