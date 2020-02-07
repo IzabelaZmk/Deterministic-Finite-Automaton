@@ -1,0 +1,10 @@
+3       //Number of states of the DFA
+0 1     //Accepted characters
+0       //initial state
+0 1     //final state
+0 1 1   //If the automaton is in state q0 and reads 1 it goes to state q1 
+0 0 0   //If the automaton is in state q0 and reads 0 it goes to state q0
+1 1 2   //If the automaton is in state q1 and reads 1 it goes to state q2
+1 0 0   //If the automaton is in state q1 and reads 0 it goes to state q0
+2 1 2   //If the automaton is in state q2 and reads 1 it goes to state q2
+2 0 2   //If the automaton is in state q2 and reads 0 it goes to state q2
