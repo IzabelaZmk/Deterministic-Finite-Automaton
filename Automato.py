@@ -7,6 +7,7 @@ import sys
 InitialState = []
 TerminalStates = []
 currentState = 0
+patharray = []
 alphabets = []
 states = []
 edges = []
@@ -54,25 +55,32 @@ i = 0
 # scans user's input and check if it is accepted by automata
 f = 0
 while n == 'y': 
-    s = input("Enter the word : ")
+    s = input("\nEnter the word : ")
     while f < len(s):
         if (s[f] in alphabets):
             f = f + 1
         else:
             sys.exit('Not Acceptable String!')
     currentState = InitialState[0]
+    patharray.append(currentState)
     for i in range(0, len(s)):
         k = 0
         while k < j:
             if(currentState == edges[k][0] and s[i] == edges[k][1]):
                 currentState = edges[k][2]
+                patharray.append(currentState)
                 k = j
             k = k + 1
-    f = 0         
+
+    f = 0
+    d = 0
+    print("The Path is    :", end =" ")
+    for d in range(len(patharray)): 
+    	print("-> Q",patharray[d], end =" ")
 
     if (currentState in TerminalStates):
-        print("accepted")
+        print("\n\tAccepted!")
     else:
-        print ("rejected")
+        print ("\n\tRejected!")
         
     n = input('\n' + 'Do you want to continue?(y/n): ')
