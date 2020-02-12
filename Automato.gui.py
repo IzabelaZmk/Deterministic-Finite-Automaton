@@ -65,13 +65,29 @@ Graphics = Tk()
 Graphics.title("Deterministic Finite Automaton")
 Graphics.geometry("350x100")
 Graphics.resizable(1,0)
-Graphics.filename =  filedialog.askopenfilename(initialdir = "",title = "Select file",filetypes = (("txt files","*.txt"),))
 
 if ( sys.platform.startswith('win')): 
     Graphics.iconbitmap(r'dfa.ico')
 else:
     Graphics.iconbitmap()
 
+Graphics.filename =  filedialog.askopenfilename(initialdir = "",title = "Select file",filetypes = (("txt files","*.txt"),))
+
+#------------------------------------
+
+# Open file and deleting line breaks and comments..
+
+Input = open(Graphics.filename)
+lines = Input.readlines()
+Input.close()
+
+i = 0
+while i < len(lines):
+    txt = lines[i]
+    txt = re.sub("\n", "", txt)
+    txt = re.sub("( )*//.*", "", txt)
+    lines[i] = txt
+    i = i+1
 #------------------------------------------------------
 # Greate User interface
 
@@ -90,20 +106,7 @@ Label3.grid(row=2,column=0,sticky = W)
 Button1.grid(row=3,column=1,sticky = W, columnspan = 10)
 
 #------------------------------------------------------
-# Open file and deleting line breaks and comments..
 
-Input = open(Graphics.filename)
-lines = Input.readlines()
-Input.close()
-
-i = 0
-while i < len(lines):
-    txt = lines[i]
-    txt = re.sub("\n", "", txt)
-    txt = re.sub("( )*//.*", "", txt)
-    lines[i] = txt
-    i = i+1
-#------------------------------------
 # create arrays with dictionary data
 
 NumofStates = lines[0]
