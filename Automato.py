@@ -16,7 +16,7 @@ g = 0
 print('\033c')
 
 while g == 0:
-    filename = input("Open Point File : ")
+    filename = input("Type the name of your text file : ")
     print('\033c')
     if filename.endswith('.txt'):
         Input = open(filename)
