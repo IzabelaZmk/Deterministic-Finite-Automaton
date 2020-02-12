@@ -1,7 +1,7 @@
-# 09/02/2020
-# Finite Automata Gui Check
-# Before start the program
-# Run Python3 then import Tkinter
+   # 09/02/2020
+   # Finite Automata Gui Check
+   # Before start the program
+   # Run Python3 then import Tkinter
 
 from tkinter import *
 from tkinter import filedialog
@@ -11,55 +11,68 @@ import sys
 InitialState = []
 TerminalStates = []
 currentState = 0
+pathtext = ""
 m = 0
 patharray = []
 alphabets = []
 states = []
 edges = []
 
-# scans user's input and check if it is accepted by automata
+    # scans user's input and check if it is accepted by automata
 def run():
-	global m
-	f = 0
-	s = s_storage.get()
-	m = m + 1
-	while f < len(s):
-	    if (s[f] in alphabets):
-	        f = f + 1
-	    else:
-	        messagebox.showerror("Error", "Not Acceptable String You Idiot!")
-	        sys.exit()
-	currentState = InitialState[0]
-	del patharray[:]
-	patharray.append(currentState)
-	for i in range(0, len(s)):
-	    k = 0
-	    while k < j:
-	        if(currentState == edges[k][0] and s[i] == edges[k][1]):
-	            currentState = edges[k][2]
-	            patharray.append(currentState)
-	            k = j
-	        k = k + 1
+    global m
+    f = 0
+    s = s_storage.get()
+    m = m + 1
+    while f < len(s):
+        if (s[f] in alphabets):
+            f = f + 1
+        else:
+            messagebox.showerror("Error", "Not Acceptable String You Idiot!")
+            sys.exit()
 
-	f = 0
-	d = 0
+    currentState = InitialState[0]
 
-	for d in range(len(patharray)): 
-		exec('Label%d=Label(Graphics,text="-> Q%s")\nLabel%d.grid(row=1,column=%d)' % (d+5,patharray[d],d+5,d+1))
+    del patharray[:]
 
-	if (currentState in TerminalStates):
-	    Label4 = Label(Graphics, text = "Accepted!")
-	else:
-	    Label4 = Label(Graphics, text = "Rejected!")
-	Label4.grid(row=2,column=1,sticky = W, columnspan = 10)
+    pathtext = ""
 
-	if m > 1:
-		Label4.grid_forget()
-		for d in range(len(patharray)):
-			exec('Label%d.grid_forget()' % (d+5))
+    patharray.append(currentState)
 
-#------------------------------------------------------
-# initialize interface
+    pathtext = pathtext + '->Q'
+    pathtext = pathtext + currentState
+
+    for i in range(0, len(s)):
+        k = 0
+        while k < j:
+            if(currentState == edges[k][0] and s[i] == edges[k][1]):
+                currentState = edges[k][2]
+                patharray.append(currentState)
+                pathtext = pathtext + '->Q'
+                pathtext = pathtext + currentState
+                k = j
+            k = k + 1
+
+    f = 0
+    d = 0
+
+    Label7 = Label(Graphics, text =" ", width = 100)
+    Label7.grid(row=1,column=1,sticky = W, columnspan = 10)
+
+    Label6 = Label(Graphics, text = pathtext)
+    Label6.grid(row=1,column=1,sticky = W, columnspan = 10)
+
+
+    if (currentState in TerminalStates):
+        Label4 = Label(Graphics, text = "Accepted!")
+    else:
+        Label4 = Label(Graphics, text = "Rejected!")
+    Label4.grid(row=2,column=1,sticky = W, columnspan = 10)
+
+
+
+    #------------------------------------------------------
+    # initialize interface
 
 Graphics = Tk()
 Graphics.title("Deterministic Finite Automaton")
@@ -105,9 +118,9 @@ Label2.grid(row=1,column=0,sticky = W)
 Label3.grid(row=2,column=0,sticky = W)
 Button1.grid(row=3,column=1,sticky = W, columnspan = 10)
 
-#------------------------------------------------------
+    #------------------------------------------------------
 
-# create arrays with dictionary data
+    # create arrays with dictionary data
 
 NumofStates = lines[0]
 alphabets = lines[1].split(" ")
@@ -121,17 +134,17 @@ while i < len(lines):
     edges.append(edge)
     i = i + 1
     j = j + 1
-    
-    
+
+
 i = 0
 while i < len(edges):
     if not(edges[i][0] in states):
         states.append(edges[i][0])
     if not(edges[i][2] in states):
         states.append(edges[i][2])
-    
+
     i = i + 1
-    
+
 i = 0
 #------------------------------------
 
