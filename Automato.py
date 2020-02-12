@@ -11,9 +11,20 @@ patharray = []
 alphabets = []
 states = []
 edges = []
-Input = open("dfa.txt")
-lines = Input.readlines()
-Input.close()
+
+g = 0
+print('\033c')
+
+while g == 0:
+    filename = input("Open Point File : ")
+    print('\033c')
+    if filename.endswith('.txt'):
+        Input = open(filename)
+        lines = Input.readlines()
+        Input.close()
+        g = 1
+    else:
+        print("Your file must be a txt file!")
 
 # deleting line breaks and comments..
 i = 0
@@ -85,3 +96,4 @@ while n == 'y':
         print ("\nResult\t       : Rejected!")
         
     n = input("\nDo you want to continue?(y/n): ")
+    print('\033c')

@@ -1,8 +1,10 @@
 # 09/02/2020
 # Finite Automata Gui Check
-# NEED tkinter Installed
+# Before start the program
+# Run Python3 then import Tkinter
 
 from tkinter import *
+from tkinter import filedialog
 from tkinter import messagebox
 import re
 import sys
@@ -14,48 +16,8 @@ patharray = []
 alphabets = []
 states = []
 edges = []
-Input = open("dfa.txt")
-lines = Input.readlines()
-Input.close()
 
-# deleting line breaks and comments..
-i = 0
-while i < len(lines):
-    txt = lines[i]
-    txt = re.sub("\n", "", txt)
-    txt = re.sub("( )*//.*", "", txt)
-    lines[i] = txt
-    i = i+1
-#------------------------------------
-# create arrays with dictionary data
-
-NumofStates = lines[0]
-alphabets = lines[1].split(" ")
-InitialState = lines[2].split(" ")
-TerminalStates = lines[3].split(" ")
-
-i = 4
-j = 0
-while i < len(lines):
-    edge = lines[i].split(" ")
-    edges.append(edge)
-    i = i + 1
-    j = j + 1
-    
-    
-i = 0
-while i < len(edges):
-    if not(edges[i][0] in states):
-        states.append(edges[i][0])
-    if not(edges[i][2] in states):
-        states.append(edges[i][2])
-    
-    i = i + 1
-    
-i = 0
-#------------------------------------
 # scans user's input and check if it is accepted by automata
-
 def run():
 	global m
 	f = 0
@@ -91,16 +53,27 @@ def run():
 	    Label4 = Label(Graphics, text = "Rejected!")
 	Label4.grid(row=2,column=1,sticky = W, columnspan = 10)
 
-"""	if m > 1:
+	if m > 1:
 		Label4.grid_forget()
 		for d in range(len(patharray)):
-			exec('Label%d.grid_forget()' % (d+5))"""
+			exec('Label%d.grid_forget()' % (d+5))
+
+#------------------------------------------------------
+# initialize interface
 
 Graphics = Tk()
 Graphics.title("Deterministic Finite Automaton")
-Graphics.iconbitmap(r'dfa.ico')
 Graphics.geometry("350x100")
 Graphics.resizable(1,0)
+Graphics.filename =  filedialog.askopenfilename(initialdir = "",title = "Select file",filetypes = (("txt files","*.txt"),))
+
+if ( sys.platform.startswith('win')): 
+    Graphics.iconbitmap(r'dfa.ico')
+else:
+    Graphics.iconbitmap()
+
+#------------------------------------------------------
+# Greate User interface
 
 Label1 = Label(Graphics, text = "Enter the word\t: ")
 Label2 = Label(Graphics, text = "The Path is\t: ")
@@ -115,5 +88,48 @@ s.grid(row=0,column=1,sticky = W, columnspan = 10)
 Label2.grid(row=1,column=0,sticky = W)
 Label3.grid(row=2,column=0,sticky = W)
 Button1.grid(row=3,column=1,sticky = W, columnspan = 10)
+
+#------------------------------------------------------
+# Open file and deleting line breaks and comments..
+
+Input = open(Graphics.filename)
+lines = Input.readlines()
+Input.close()
+
+i = 0
+while i < len(lines):
+    txt = lines[i]
+    txt = re.sub("\n", "", txt)
+    txt = re.sub("( )*//.*", "", txt)
+    lines[i] = txt
+    i = i+1
+#------------------------------------
+# create arrays with dictionary data
+
+NumofStates = lines[0]
+alphabets = lines[1].split(" ")
+InitialState = lines[2].split(" ")
+TerminalStates = lines[3].split(" ")
+
+i = 4
+j = 0
+while i < len(lines):
+    edge = lines[i].split(" ")
+    edges.append(edge)
+    i = i + 1
+    j = j + 1
+    
+    
+i = 0
+while i < len(edges):
+    if not(edges[i][0] in states):
+        states.append(edges[i][0])
+    if not(edges[i][2] in states):
+        states.append(edges[i][2])
+    
+    i = i + 1
+    
+i = 0
+#------------------------------------
 
 Graphics.mainloop()
