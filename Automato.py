@@ -4,6 +4,7 @@
 n = 'y'
 import re
 import sys
+from os import system, name
 InitialState = []
 TerminalStates = []
 currentState = 0
@@ -12,12 +13,21 @@ alphabets = []
 states = []
 edges = []
 
+def clear(): 
+  
+    # for windows 
+    if name == 'nt': 
+        _ = system('cls') 
+  
+    # for mac and linux(here, os.name is 'posix') 
+    else: 
+        print('\033c')
 g = 0
-print('\033c')
+clear()
 
 while g == 0:
     filename = input("Type the name of your text file : ")
-    print('\033c')
+    clear()
     if filename.endswith('.txt'):
         Input = open(filename)
         lines = Input.readlines()
@@ -96,4 +106,4 @@ while n == 'y':
         print ("\nResult\t       : Rejected!")
         
     n = input("\nDo you want to continue?(y/n): ")
-    print('\033c')
+    clear()
