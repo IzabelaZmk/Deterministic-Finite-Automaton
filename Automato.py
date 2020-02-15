@@ -28,13 +28,16 @@ clear()
 while g == 0:
     filename = input("Type the name of your text file : ")
     clear()
-    if filename.endswith('.txt'):
-        Input = open(filename)
-        lines = Input.readlines()
-        Input.close()
-        g = 1
-    else:
-        print("Your file must be a txt file!")
+    try:
+        if filename.endswith('.txt'):
+            Input = open(filename)
+            lines = Input.readlines()
+            Input.close()
+            g = 1
+        else:
+            print("Your file must be a txt file!")
+    except IOError:
+        print("File not Found!")
 
 # deleting line breaks and comments..
 i = 0
