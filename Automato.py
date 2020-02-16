@@ -13,6 +13,9 @@ alphabets = []
 states = []
 edges = []
 
+#------------------------------------
+# Clear terminal
+
 def clear(): 
   
     # for windows 
@@ -24,6 +27,9 @@ def clear():
         print('\033c')
 g = 0
 clear()
+
+#------------------------------------
+# Check and open text file
 
 while g == 0:
     filename = input("Type the name of your text file : ")
@@ -39,14 +45,23 @@ while g == 0:
     except IOError:
         print("File not Found!")
 
+#------------------------------------
 # deleting line breaks and comments..
+
 i = 0
 while i < len(lines):
     txt = lines[i]
+    txt = re.sub("(\s)*//.*", "", txt)
     txt = re.sub("\n", "", txt)
-    txt = re.sub("( )*//.*", "", txt)
     lines[i] = txt
-    i = i+1
+    i = i + 1
+    if i == 1 or i == 3:
+        if not re.match("^\w*$", txt):
+            sys.exit("Number of states or initial state can't be more than one")
+    if i > 4:
+        if not re.match("^\w*( )\w*( )\w*$", txt):
+            sys.exit("The automaton states must be three")
+
 #------------------------------------
 # create arrays with dictionary data
 
@@ -74,9 +89,10 @@ while i < len(edges):
     i = i + 1
     
 i = 0
-#------------------------------------
 
-# scans user's input and check if it is accepted by automata
+#----------------------------------------------------------------------------------
+# scans user's input and check if it is accepted by automata then print the results
+
 f = 0
 while n == 'y': 
     s = input("Enter the word : ")
