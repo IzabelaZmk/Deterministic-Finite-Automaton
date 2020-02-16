@@ -1,7 +1,7 @@
-   # 09/02/2020
-   # Finite Automata Gui Check
-   # Before start the program
-   # Run Python3 then import Tkinter
+# 09/02/2020
+# Finite Automata Gui Check
+# Before start the program
+# Run Python3 then import Tkinter
 
 from tkinter import *
 from tkinter import filedialog
@@ -12,18 +12,18 @@ InitialState = []
 TerminalStates = []
 currentState = 0
 pathtext = ""
-m = 0
 patharray = []
 alphabets = []
 states = []
 edges = []
 
-    # scans user's input and check if it is accepted by automata
+#------------------------------------
+# scans user's input and check if it is accepted by automata
+
 def run():
     global m
     f = 0
     s = s_storage.get()
-    m = m + 1
     while f < len(s):
         if (s[f] in alphabets):
             f = f + 1
@@ -69,10 +69,8 @@ def run():
         Label4 = Label(Graphics, text = "Rejected!")
     Label4.grid(row=2,column=1,sticky = W, columnspan = 10)
 
-
-
-    #------------------------------------------------------
-    # initialize interface
+#------------------------------------------------------
+# initialize interface
 
 Graphics = Tk()
 Graphics.title("Deterministic Finite Automaton")
@@ -84,23 +82,35 @@ if ( sys.platform.startswith('win')):
 else:
     Graphics.iconbitmap()
 
-Graphics.filename =  filedialog.askopenfilename(initialdir = "",title = "Select file",filetypes = (("txt files","*.txt"),))
-
 #------------------------------------
+# Open file and deleting line breaks and comments check if dfa is proper..
 
-# Open file and deleting line breaks and comments..
+m = 0
+while m == 0:
+    Graphics.filename = filedialog.askopenfilename(initialdir = "",title = "Select file",filetypes = (("txt files","*.txt"),))
 
-Input = open(Graphics.filename)
-lines = Input.readlines()
-Input.close()
+    Input = open(Graphics.filename)
+    lines = Input.readlines()
+    Input.close()
+    m = 1
+    i = 0
+    while i < len(lines):
+        txt = lines[i]
+        txt = re.sub("(\s)*//.*", "", txt)
+        txt = re.sub("\n", "", txt)
+        lines[i] = txt
+        i = i + 1
 
-i = 0
-while i < len(lines):
-    txt = lines[i]
-    txt = re.sub("\n", "", txt)
-    txt = re.sub("( )*//.*", "", txt)
-    lines[i] = txt
-    i = i+1
+        if i == 1 or i == 3:
+            if not re.match("^\w*$", txt):
+                messagebox.showerror("Error", "Number of states or initial state can't be more than one")
+                m = 0
+
+        if i > 4:
+            if not re.match("^\w*( )\w*( )\w*$", txt):
+                messagebox.showerror("Error", "The automaton states must be three")
+                m = 0
+
 #------------------------------------------------------
 # Greate User interface
 
@@ -118,9 +128,8 @@ Label2.grid(row=1,column=0,sticky = W)
 Label3.grid(row=2,column=0,sticky = W)
 Button1.grid(row=3,column=1,sticky = W, columnspan = 10)
 
-    #------------------------------------------------------
-
-    # create arrays with dictionary data
+#------------------------------------------------------
+# create arrays with dictionary data
 
 NumofStates = lines[0]
 alphabets = lines[1].split(" ")
@@ -146,6 +155,5 @@ while i < len(edges):
     i = i + 1
 
 i = 0
-#------------------------------------
 
 Graphics.mainloop()
