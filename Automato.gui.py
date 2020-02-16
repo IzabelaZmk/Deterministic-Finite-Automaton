@@ -21,7 +21,6 @@ edges = []
 # scans user's input and check if it is accepted by automata
 
 def run():
-    global m
     f = 0
     s = s_storage.get()
     while f < len(s):
